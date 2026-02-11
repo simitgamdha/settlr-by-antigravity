@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Settlr.Web.Extension;
 using Settlr.Web.Middlewares;
+using Settlr.Services.Hubs;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

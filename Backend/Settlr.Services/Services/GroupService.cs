@@ -6,7 +6,7 @@ using Settlr.Models.Dtos.ResponseDtos;
 using Settlr.Models.Entities;
 using Settlr.Services.IServices;
 using Microsoft.AspNetCore.SignalR;
-using Settlr.Web.Hubs;
+using Settlr.Services.Hubs;
 
 namespace Settlr.Services.Services;
 

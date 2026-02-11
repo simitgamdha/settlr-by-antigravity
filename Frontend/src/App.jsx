@@ -79,7 +79,6 @@ function App() {
             autoClose={3000}
             theme="dark"
           />
-          />
         </BrowserRouter>
       </SignalRProvider>
     </ThemeProvider>
