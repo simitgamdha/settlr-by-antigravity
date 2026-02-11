@@ -1,0 +1,12 @@
+D:\Settlr by Antigravity\Backend\Settlr.Common\bin\Debug\net9.0\Settlr.Common.deps.json
+D:\Settlr by Antigravity\Backend\Settlr.Common\bin\Debug\net9.0\Settlr.Common.dll
+D:\Settlr by Antigravity\Backend\Settlr.Common\bin\Debug\net9.0\Settlr.Common.pdb
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\Settlr.Common.csproj.AssemblyReference.cache
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\Settlr.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\Settlr.Common.AssemblyInfoInputs.cache
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\Settlr.Common.AssemblyInfo.cs
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\Settlr.Common.csproj.CoreCompileInputs.cache
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\Settlr.Common.dll
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\refint\Settlr.Common.dll
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\Settlr.Common.pdb
+D:\Settlr by Antigravity\Backend\Settlr.Common\obj\Debug\net9.0\ref\Settlr.Common.dll
