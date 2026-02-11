@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { Receipt, Plus, X, TrendingUp, TrendingDown } from 'lucide-react';
 import { expenseService } from '../services/expenseService';
 import { groupService } from '../services/groupService';
+import { useSignalR } from '../context/SignalRContext';
 import Layout from '../components/Layout';
 import './Expenses.css';
 
@@ -19,6 +20,7 @@ export default function Expenses() {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
+    const { connection, joinGroup } = useSignalR();
 
     useEffect(() => {
         loadGroups();
@@ -28,8 +30,25 @@ export default function Expenses() {
         if (selectedGroupId) {
             loadExpenses();
             loadBalances();
+
+            // Join the SignalR group for real-time updates
+            joinGroup(selectedGroupId);
         }
-    }, [selectedGroupId]);
+
+        if (connection && selectedGroupId) {
+            connection.on("ReceiveExpenseUpdate", () => {
+                console.log("Real-time update: Refreshing expenses...");
+                loadExpenses();
+                loadBalances();
+            });
+        }
+
+        return () => {
+            if (connection) {
+                connection.off("ReceiveExpenseUpdate");
+            }
+        };
+    }, [selectedGroupId, connection]);
 
     const loadGroups = async () => {
         try {

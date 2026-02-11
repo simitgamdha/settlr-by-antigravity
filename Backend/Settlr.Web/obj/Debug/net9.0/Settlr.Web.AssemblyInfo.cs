@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Settlr.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+94ed08a59e76f5c2771d1aba1d18d5f4dcd6111d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Settlr.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Settlr.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

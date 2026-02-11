@@ -5,6 +5,8 @@ using Settlr.Models.Dtos.RequestDtos;
 using Settlr.Models.Dtos.ResponseDtos;
 using Settlr.Models.Entities;
 using Settlr.Services.IServices;
+using Microsoft.AspNetCore.SignalR;
+using Settlr.Web.Hubs;
 
 namespace Settlr.Services.Services;
 
@@ -17,17 +19,20 @@ public class ExpenseService : IExpenseService
     private readonly IExpenseSplitRepository _expenseSplitRepository;
     private readonly IGroupMemberRepository _groupMemberRepository;
     private readonly IGroupRepository _groupRepository;
+    private readonly IHubContext<SettlrHub> _hubContext;
 
     public ExpenseService(
         IExpenseRepository expenseRepository,
         IExpenseSplitRepository expenseSplitRepository,
         IGroupMemberRepository groupMemberRepository,
-        IGroupRepository groupRepository)
+        IGroupRepository groupRepository,
+        IHubContext<SettlrHub> hubContext)
     {
         _expenseRepository = expenseRepository;
         _expenseSplitRepository = expenseSplitRepository;
         _groupMemberRepository = groupMemberRepository;
         _groupRepository = groupRepository;
+        _hubContext = hubContext;
     }
 
     /// <summary>
@@ -99,6 +104,9 @@ public class ExpenseService : IExpenseService
         ExpenseResponseDto response = MapToExpenseResponseDto(expenseWithSplits!);
 
         return Response<ExpenseResponseDto>.Success(response, Messages.ExpenseCreatedSuccessfully);
+        
+        // SignalR: Notify all clients in this group that a new expense was added
+        await _hubContext.Clients.Group(request.GroupId.ToString()).SendAsync("ReceiveExpenseUpdate", response);
     }
 
     /// <summary>

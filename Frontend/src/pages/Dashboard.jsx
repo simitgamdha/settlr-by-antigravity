@@ -2,16 +2,37 @@ import { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingUp, TrendingDown, Users, Receipt, Calendar } from 'lucide-react';
 import { dashboardService } from '../services/dashboardService';
+import { useSignalR } from '../context/SignalRContext';
 import Layout from '../components/Layout';
 import './Dashboard.css';
 
 export default function Dashboard() {
     const [dashboardData, setDashboardData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { connection } = useSignalR();
 
     useEffect(() => {
         loadDashboard();
-    }, []);
+
+        if (connection) {
+            connection.on("ReceiveExpenseUpdate", () => {
+                console.log("Real-time update: Refreshing dashboard stats...");
+                loadDashboard();
+            });
+
+            connection.on("ReceiveGroupUpdate", () => {
+                console.log("Real-time update: Refreshing group list...");
+                loadDashboard();
+            });
+        }
+
+        return () => {
+            if (connection) {
+                connection.off("ReceiveExpenseUpdate");
+                connection.off("ReceiveGroupUpdate");
+            }
+        };
+    }, [connection]);
 
     const loadDashboard = async () => {
         try {

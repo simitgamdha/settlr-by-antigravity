@@ -5,6 +5,8 @@ using Settlr.Models.Dtos.RequestDtos;
 using Settlr.Models.Dtos.ResponseDtos;
 using Settlr.Models.Entities;
 using Settlr.Services.IServices;
+using Microsoft.AspNetCore.SignalR;
+using Settlr.Web.Hubs;
 
 namespace Settlr.Services.Services;
 
@@ -16,15 +18,18 @@ public class GroupService : IGroupService
     private readonly IGroupRepository _groupRepository;
     private readonly IGroupMemberRepository _groupMemberRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IHubContext<SettlrHub> _hubContext;
 
     public GroupService(
         IGroupRepository groupRepository,
         IGroupMemberRepository groupMemberRepository,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IHubContext<SettlrHub> hubContext)
     {
         _groupRepository = groupRepository;
         _groupMemberRepository = groupMemberRepository;
         _userRepository = userRepository;
+        _hubContext = hubContext;
     }
 
     /// <summary>
@@ -107,6 +112,9 @@ public class GroupService : IGroupService
         GroupResponseDto response = MapToGroupResponseDto(updatedGroup!);
 
         return Response<GroupResponseDto>.Success(response, Messages.MemberAddedSuccessfully);
+        
+        // SignalR: Notify all clients in this group that the member list has changed
+        await _hubContext.Clients.Group(request.GroupId.ToString()).SendAsync("ReceiveGroupUpdate", response);
     }
 
     /// <summary>

@@ -44,6 +44,7 @@ builder.Services.AddSwaggerGen(options =>
 // Use custom extension methods (found in Settlr.Web.Extension) to keep Program.cs clean
 builder.Services.AddApplicationServices(builder.Configuration); // Registers Repos, Services, and DB
 builder.Services.AddJwtAuthentication(builder.Configuration);  // Configures JWT Bearer validation logic
+builder.Services.AddSignalR(); // Register SignalR
 
 // Global CORS Policy: Allow the React frontend to communicate with this API
 builder.Services.AddCors(options =>
@@ -82,8 +83,9 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
-// 4. Map endpoints to Controllers
+// 4. Map endpoints to Controllers and Hubs
 app.MapControllers();
+app.MapHub<SettlrHub>("/hubs/settlr");
 
 app.Run();
 
